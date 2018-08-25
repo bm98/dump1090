@@ -2,7 +2,7 @@ Source: dump1090-fa
 Section: embedded
 Priority: extra
 Maintainer: Oliver Jowett <oliver@mutability.co.uk>
-Build-Depends: debhelper(>=9), librtlsdr-dev, libusb-1.0-0-dev, pkg-config, dh-systemd, libncurses5-dev, libbladerf-dev
+Build-Depends: debhelper(>=9), libusb-1.0-0-dev, pkg-config, dh-systemd, libncurses5-dev
 Standards-Version: 3.9.3
 Homepage: http://www.flightaware.com/
 Vcs-Git: https://github.com/flightaware/dump1090.git
@@ -19,7 +19,8 @@ Description: transitional dummy package for dump1090
 
 Package: dump1090-fa
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbladerf1 (>= 0.2016.06), adduser, lighttpd
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, lighttpd
+Recommends: python(>=2.5), cron | cron-daemon, curl
 Replaces: dump1090 (<< 3.0)
 Breaks: dump1090 (<< 3.0)
 Description: ADS-B Ground Station System for RTL-SDR
@@ -28,3 +29,5 @@ Description: ADS-B Ground Station System for RTL-SDR
  .
  This is FlightAware's fork of dump1090-mutability, customized for use
  in the PiAware sdcard images.
+ .
+ This is a modification to use it as viewer only.

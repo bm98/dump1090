@@ -20,9 +20,10 @@ ifeq ($(DEB_HOST_ARCH),armhf)
 endif
 
 override_dh_auto_build:
-	dh_auto_build -- RTLSDR=yes BLADERF=yes DUMP1090_VERSION=$(DEB_VERSION)
+	dh_auto_build -- RTLSDR=no BLADERF=no DUMP1090_VERSION=$(DEB_VERSION)
 
 override_dh_install:
+	chmod -x debian/dump1090-fa*
 	dh_install
 	install -d debian/dump1090-fa/usr/bin
 	cp -a dump1090 debian/dump1090-fa/usr/bin/dump1090-fa

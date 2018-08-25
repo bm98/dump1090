@@ -1,3 +1,2 @@
 public_html/* usr/share/dump1090-fa/html
 debian/lighttpd/* etc/lighttpd/conf-available
-bladerf/* /usr/share/dump1090-fa/bladerf
