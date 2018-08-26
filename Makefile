@@ -9,31 +9,6 @@ DIALECT = -std=c11
 CFLAGS += $(DIALECT) -O2 -g -Wall -Werror -W -D_DEFAULT_SOURCE
 LIBS = -lpthread -lm -lrt
 
-ifeq ($(RTLSDR), yes)
-  SDR_OBJ += sdr_rtlsdr.o
-  CPPFLAGS += -DENABLE_RTLSDR
-
-  ifdef RTLSDR_PREFIX
-    CPPFLAGS += -I$(RTLSDR_PREFIX)/include
-    LDFLAGS += -L$(RTLSDR_PREFIX)/lib
-  else
-    CFLAGS += $(shell pkg-config --cflags librtlsdr)
-    LDFLAGS += $(shell pkg-config --libs-only-L librtlsdr)
-  endif
-
-  ifeq ($(STATIC), yes)
-    LIBS_SDR += -Wl,-Bstatic -lrtlsdr -Wl,-Bdynamic -lusb-1.0
-  else
-    LIBS_SDR += -lrtlsdr -lusb-1.0
-  endif
-endif
-
-ifeq ($(BLADERF), yes)
-  SDR_OBJ += sdr_bladerf.o
-  CPPFLAGS += -DENABLE_BLADERF
-  CFLAGS += $(shell pkg-config --cflags libbladeRF)
-  LIBS_SDR += $(shell pkg-config --libs libbladeRF)
-endif
 
 all: dump1090 view1090
 

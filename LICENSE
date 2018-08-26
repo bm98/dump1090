@@ -10,8 +10,10 @@ to discuss your requirements.
 The source code incorporates work that was released under a
 BSD-style license, reproduced below. For unmodified versions
 of the original work that may be used under the terms of that
-license, please see https://github.com/antirez/dump1090 and
-https://github.com/MalcolmRobb/dump1090.
+license, please see 
+https://github.com/antirez/dump1090 and
+https://github.com/MalcolmRobb/dump1090 and 
+https://github.com/flightaware/dump1090
 
 // Copyright (C) 2012 by Salvatore Sanfilippo <antirez@gmail.com>
 //

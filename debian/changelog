@@ -1,6 +1,9 @@
 dump1090-fa (3.6.2.1) UNRELEASED; urgency=low
 
+  * initial fork from original source
   * Prep for docker use (no Net only, RTL-SDR, BLADERF)
+  * Removed: files and libs for rtl-sdr, bladeRF, libUsb dependencies
+  * Added: daemon init for dump1090-fa
 
  -- Martin Burri <github@mail.burri-web.org>  Sat, 26 Aug 2018 18:32:30 +0100
 
