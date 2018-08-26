@@ -32,9 +32,12 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 # sanitize missing settings
 DUMP1090_USER="dump1090"
+JSON_DIR=/run/$NAME
+LOGFILE=/var/log/$NAME/errlog
 
 # receiver:
-NICELEVEL="--nicelevel -5"
+#NICELEVEL="--nicelevel -5"
+NICELEVEL=""
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
@@ -72,7 +75,7 @@ do_start()
 
 	start-stop-daemon --start $NICELEVEL --quiet --pidfile $PIDFILE --user "$DUMP1090_USER" --chuid "$DUMP1090_USER" --make-pidfile --background --no-close --exec $DAEMON -- \
 		 $RECEIVER_OPTIONS $DECODER_OPTIONS $NET_OPTIONS $JSON_OPTIONS $PIAWARE_DUMP1090_LOCATION_OPTIONS \
- 			--write-json /run/dump1090-fa --quiet >>$LOGFILE 2>&1 \
+ 			--write-json $JSON_DIR --quiet >>$LOGFILE 2>&1 \
 		|| return 2
         sleep 1
 }
