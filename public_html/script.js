@@ -16,6 +16,7 @@ var HighlightedPlane = null;
 var FollowSelected = false;
 var infoBoxOriginalPosition = {};
 var customAltitudeColors = true;
+var global_showSelecedAsSheet = false; // BM extension
 
 var SpecialSquawks = {
         '7500' : { cssClass: 'squawk7500', markerColor: 'rgb(255, 85, 85)', text: 'Aircraft Hijacking' },
@@ -206,7 +207,7 @@ function initialize() {
         $("#sidebar_container").resizable({handles: {w: '#splitter'}});
 
         // Set up aircraft information panel
-        $("#selected_infoblock").draggable({containment: "parent"});
+//        $("#selected_infoblock").draggable({containment: "parent"});
 
         // Set up event handlers for buttons
         $("#toggle_sidebar_button").click(toggleSidebarVisibility);
@@ -246,7 +247,11 @@ function initialize() {
             customAltitudeColors = false;
         }
 
-
+		// BM ADDITION
+		gp_init();
+		// END BM ADDITION
+		
+		// attach event handlers
         $("#altitude_filter_reset_button").click(onResetAltitudeFilter);
 
         $('#settingsCog').on('click', function() {
@@ -278,6 +283,11 @@ function initialize() {
         		sortByDataSource();
         	}
         	
+        });
+		// Added BM extension - select GlassPanel (unchecked) or Sheet (checked)
+        $('#selected_sheet_checkbox').on('click', function() {
+			toggleSheetDisplay(true);
+        	refreshSelected();
         });
 
         $('#altitude_checkbox').on('click', function() {
@@ -829,7 +839,7 @@ function refreshSelected() {
 	refreshPageTitle();
        
         var selected = false;
-	if (typeof SelectedPlane !== 'undefined' && SelectedPlane != "ICAO" && SelectedPlane != null) {
+        if (typeof SelectedPlane !== 'undefined' && SelectedPlane != "ICAO" && SelectedPlane != null) {
     	        selected = Planes[SelectedPlane];
         }
         
@@ -845,16 +855,46 @@ function refreshSelected() {
                 $('#dump1090_message_rate').text("n/a");
         }
 
-        setSelectedInfoBlockVisibility();
+        setSelectedInfoBlockVisibility(); // en/disable Selected Details
 
-        if (!selected) {
+        if (!selected) { // no selected Data
+//                $('#selected_infoblock').css('display','none'); // @@@@@@ BM
+//		        $('#selected_gpanel').css('display','none'); // @@@@@@ BM
+                $('#dump1090_infoblock').css('display','block');
+                $('#dump1090_version').text(Dump1090Version);
+                $('#dump1090_total_ac').text(TrackedAircraft);
+                $('#dump1090_total_ac_positions').text(TrackedAircraftPositions);
+                $('#dump1090_total_history').text(TrackedHistorySize);
+
+                if (MessageRate !== null) {
+                        $('#dump1090_message_rate').text(MessageRate.toFixed(1));
+                } else {
+                        $('#dump1090_message_rate').text("n/a");
+                }
+
                 return;
         }
-      
+
+        $('#dump1090_infoblock').css('display','none');
+		// BM ADDITION
+        //$('#selected_infoblock').css('display','block');
+//        $('#selected_infoblock').css('display','none');
+ //       $('#selected_gpanel').css('display','block');
+ 		if ( global_showSelecedAsSheet === false ) {
+			gp_update("GlasPanel", selected); // name as in HTML... bad but then..
+		}
+		// END BM ADDITION
+		
         if (selected.flight !== null && selected.flight !== "") {
+			
                 $('#selected_callsign').text(selected.flight);
+                $('#selected_links').css('display','inline');
+                $('#selected_fr24_link').attr('href','http://fr24.com/'+selected.flight);
+                $('#selected_flightstats_link').attr('href','http://www.flightstats.com/go/FlightStatus/flightStatusByFlight.do?flightNumber='+selected.flight);
+			    $('#selected_planefinder_link').attr('href','https://planefinder.net/flight/'+selected.flight);
         } else {
                 $('#selected_callsign').text('n/a');
+                $('#selected_links').css('display','none');
         }
         $('#selected_flightaware_link').html(getFlightAwareModeSLink(selected.icao, selected.flight, "FlightAware.com"));
 
@@ -1422,16 +1462,21 @@ function setSelectedInfoBlockVisibility() {
     var mapIsVisible = $("#map_container").is(":visible");
     var planeSelected = (typeof SelectedPlane !== 'undefined' && SelectedPlane != null && SelectedPlane != "ICAO");
 
+	// BM extension
+	$('#selected_gpanel').hide();
+	$('#selected_infoblock').hide();
     if (planeSelected && mapIsVisible) {
-        $('#selected_infoblock').show();
-    }
-    else {
-        $('#selected_infoblock').hide();
+		if ( global_showSelecedAsSheet===true ) {
+	        $('#selected_infoblock').show(); 
+		} else {
+	        $('#selected_gpanel').show();
+		}
     }
 }
 
 // Reposition selected plane info box if it overlaps plane marker
 function adjustSelectedInfoBlockPosition() {
+	return;
     if (typeof Planes === 'undefined' || typeof SelectedPlane === 'undefined' || Planes === null) {
         return;
     }
@@ -1628,6 +1673,24 @@ function toggleAltitudeChart(switchToggle) {
 	}
 	localStorage['altitudeChart'] = altitudeChartDisplay;
 }
+// BM extension - checkbox handler
+function toggleSheetDisplay(switchFilter) {
+	if (typeof localStorage['sheetDisplaySelector'] === 'undefined') {
+		localStorage['sheetDisplaySelector'] = 'not_shown';
+	}
+	var sheetDisplay = localStorage['sheetDisplaySelector'];
+	if (switchFilter === true) {
+		sheetDisplay = (sheetDisplay === 'not_shown') ? 'shown' : 'not_shown';
+	}
+	if (sheetDisplay === 'shown') {
+		$('#selected_sheet_checkbox').addClass('settingsCheckboxChecked');
+	} else {
+		$('#selected_sheet_checkbox').removeClass('settingsCheckboxChecked');
+	}
+	localStorage['sheetDisplaySelector'] = sheetDisplay;
+	global_showSelecedAsSheet = (sheetDisplay === 'shown');
+}
+
 
 function onResetAltitudeFilter(e) {
     $("#altitude_filter_min").val("");

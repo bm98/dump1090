@@ -15,6 +15,13 @@ https://github.com/antirez/dump1090 and
 https://github.com/MalcolmRobb/dump1090 and 
 https://github.com/flightaware/dump1090
 
+
+Instrument Panel (c) 2018 Martin Burri 
+relates to all gp*.js Javascript files in public_html
+NOTE: the software is provided as is and shall only be used
+for educational purpose. The panel is not intended to be used
+in any air flight safety related environment.
+
 // Copyright (C) 2012 by Salvatore Sanfilippo <antirez@gmail.com>
 //
 // All rights reserved.
