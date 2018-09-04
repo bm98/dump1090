@@ -22,11 +22,11 @@ javascript draws on HTML5 Canvas.
 [Using the dump1090-fa with instrument panel (Youtube](https://www.youtube.com/watch?v=mQ3SeIqvK6E)
 [![dump1090 instrument panel](https://raw.githubusercontent.com/bm98/dump1090/master/img/dump1090-fa-Mod1.png)](https://www.youtube.com/watch?v=mQ3SeIqvK6E)
 
-[![Panel view](https://raw.githubusercontent.com/bm98/dump1090/master/img/dump1090-fa-Mod0.png)]
+[Panel view](https://raw.githubusercontent.com/bm98/dump1090/master/img/dump1090-fa-Mod0.png)]
 
-[![Change between Panel and Sheet](https://raw.githubusercontent.com/bm98/dump1090/master/img/dump1090-fa-Mod2.png)]
+[Change between Panel and Sheet](https://raw.githubusercontent.com/bm98/dump1090/master/img/dump1090-fa-Mod2.png)]
 
-[![Sheet view](https://raw.githubusercontent.com/bm98/dump1090/master/img/dump1090-fa-Mod3.png)]
+[Sheet view](https://raw.githubusercontent.com/bm98/dump1090/master/img/dump1090-fa-Mod3.png)]
 
 
 ### Using only the Instrument Panel
