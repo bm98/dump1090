@@ -31,20 +31,19 @@ javascript draws on HTML5 Canvas.
 
 ### Using only the Instrument Panel
 
-...
-Stop the http daemon:  $ sudo service lighttpd stop
-...
+... Stop the http daemon:  $ sudo service lighttpd stop
+ 
 In /usr/share/dump1090-fa/html
-
+ 
 Backup the original index.html, style.css and script.js
-
+ 
 Drop the following files from this public_html folder here:
 index.html, style.css, script.js + all the new gp*.js
-...
+ 
 $ sudo cp   is usually needed  
-...
+ 
 Start the http daemon: $ sudo service lighttpd start
-...
+ 
 
 ### Actually building it
 
