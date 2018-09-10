@@ -8,7 +8,7 @@
 function Iw_geo()
 {
 	// absolute pix in the canvas
-	this.W    = 330; this.H    = 160;  // height
+	this.W    = 330; this.H    = 195;  // height
 	this.X    = gp_geo.X+gp_geo.W-this.W-1;  // 1 from the right 
 	this.Y    = gp_geo.UtcY-this.H-1; 
 
@@ -30,6 +30,7 @@ const iw_obj = {
 // Draw the Infowindow contents
 	dataSource : function(selPlane)
 	{
+		// from fa script
         if (selPlane.getDataSource() === "adsb_icao") {
         	return "ADS-B";
         } else if (selPlane.getDataSource() === "tisb_trackfile" || selPlane.getDataSource() === "tisb_icao" || selPlane.getDataSource() === "tisb_other") {
@@ -43,6 +44,7 @@ const iw_obj = {
 	
 	instrument : function(selPlane)
 	{
+		// from fa script
         if (selPlane.version == null) {
         	return 'none';
         } else if (selPlane.version == 0) {
@@ -87,6 +89,7 @@ const iw_obj = {
 			ctx.fillText("RSSI", iw_geo.LblX, iw_geo.LblY+iw_geo.LblH+i*iw_geo.offset); i++;
 			ctx.fillText("Source", iw_geo.LblX, iw_geo.LblY+iw_geo.LblH+i*iw_geo.offset); i++;
 			ctx.fillText("Instrument", iw_geo.LblX, iw_geo.LblY+iw_geo.LblH+i*iw_geo.offset); i++;
+			ctx.fillText("QNH", iw_geo.LblX, iw_geo.LblY+iw_geo.LblH+i*iw_geo.offset); i++;
 			// label contents
 			i = 0;
 			ctx.font = gpGUI.font24;
@@ -112,6 +115,12 @@ const iw_obj = {
 			ctx.fillStyle = gpGUI.colNav;
 			ctx.fillText(this.dataSource(selPlane).toString(), iw_geo.FldX, iw_geo.LblY+iw_geo.LblH+i*iw_geo.offset); i++; // next field
 			ctx.fillText(this.instrument(selPlane).toString(), iw_geo.FldX, iw_geo.LblY+iw_geo.LblH+i*iw_geo.offset); i++; // next field
+			if ( selPlane.nav_qnh != null ) {
+				ctx.fillText(selPlane.nav_qnh.toString() + " hPa", iw_geo.FldX, iw_geo.LblY+iw_geo.LblH+i*iw_geo.offset); i++; // next field
+			}
+			else {
+				ctx.fillText("- - - ", iw_geo.FldX, iw_geo.LblY+iw_geo.LblH+i*iw_geo.offset); i++; // next field
+			}
 
 		ctx.restore();		
 	},

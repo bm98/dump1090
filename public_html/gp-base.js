@@ -114,7 +114,21 @@ const gp_obj = {
 		}
 		// airframe type
 		ctx.textAlign = "right"; ctx.textBaseline="top";
-		ctx.fillText(selPlane.icaotype, gp_geo.Div1X-10,5);
+		// sanity for null values
+		var icaotype = "- - - ";
+		var flight = "- - - ";
+		var registration =  "- - - ";
+		if ( selPlane.icaotype != null ) {
+			icaotype = selPlane.icaotype;
+		}		
+		if ( selPlane.flight != null ) {
+			flight = selPlane.flight;
+		}
+		if ( selPlane.registration != null ) {
+			registration = selPlane.registration;
+		}
+		// Airframe type
+		ctx.fillText(icaotype, gp_geo.Div1X-10,5);
 
 		// callsign - register
 		ctx.font = gpGUI.font24s;
@@ -122,7 +136,8 @@ const gp_obj = {
 		ctx.textAlign = "center"; ctx.textBaseline="top";
 	    ctx.save();
 			ctx.translate(gp_geo.CallRegX, gp_geo.CallRegY);
-			ctx.fillText( selPlane.flight + "   " + selPlane.registration, gp_geo.CallRegXC, gp_geo.CallRegYC); // middle align
+			// sanity for null values
+			ctx.fillText( flight + "   " + registration, gp_geo.CallRegXC, gp_geo.CallRegYC); // middle align
 	    ctx.restore();
 
 	    ctx.save();
@@ -172,20 +187,21 @@ const gp_obj = {
 			if ( selPlane.roll != null ){
 				ctx.fillText( selPlane.roll.toFixed(2).toString() + "°" , gp_geo.LblW+gp_geo.FldW, gp_geo.LblH);
 			}
+			else {
+				ctx.fillText( "- - - " , gp_geo.LblW+gp_geo.FldW, gp_geo.LblH);
+			}
 			if ( selPlane.track_rate != null ){
 				ctx.fillText( selPlane.track_rate.toFixed(2).toString() + "r", (gp_geo.LblW+gp_geo.FldW)*2+4, gp_geo.LblH);
+			}
+			else {
+				ctx.fillText( "- - - ", (gp_geo.LblW+gp_geo.FldW)*2+4, gp_geo.LblH);
 			}
 			if ( selPlane.gs != null ){
 				ctx.fillText( selPlane.gs.toFixed(0).toString() + " KT" , (gp_geo.LblW+gp_geo.FldW)*3+5, gp_geo.LblH);
 			}
-			/*
-			if ( selPlane.seen === "now") {
-				ctx.fillText( selPlane.seen.toString(), (gp_geo.LblW+gp_geo.FldW)*3+5, gp_geo.LblH);
-			}
 			else {
-				ctx.fillText( selPlane.seen.toFixed(1).toString() + "s" , (gp_geo.LblW+gp_geo.FldW)*3+5, gp_geo.LblH);
+				ctx.fillText( "- - - " , (gp_geo.LblW+gp_geo.FldW)*3+5, gp_geo.LblH);
 			}
-			*/
 	    ctx.restore();
 	},
 	
@@ -292,8 +308,13 @@ function gp_update(canvasName, selPlane)
 		ctx.rect(gp_geo.X, gp_geo.Y+gp_geo.HeadH, gp_geo.W, gp_geo.H-gp_geo.HeadH-gp_geo.FootH ); // inner part only
 		ctx.clip()
 		as_obj.draw(selPlane.ias, selPlane.tas, selPlane.mach); // IAS, TAS, MACH
+		// sanity for null values
+		var setaltm = null;
+		if ( selPlane.nav_altitude != null) {
+			setaltm = convert_altitude(selPlane.nav_altitude, "metric");
+		}
 		alt_obj.draw(selPlane.altitude, selPlane.nav_qnh, 
-					 selPlane.nav_altitude, convert_altitude(selPlane.nav_altitude, "metric") ); // IALT, BARO, SETALT, SETALTM
+					 selPlane.nav_altitude, setaltm ); // IALT, BARO, SETALT, SETALTM
 		vs_obj.draw(selPlane.vert_rate);
 		comp_obj.draw(selPlane.mag_heading, selPlane.nav_heading, selPlane.track, selPlane.track_rate); //THEAD, NHEAD, TRACK, TRACKRATE
 		iw_obj.drawInfowindow(selPlane);

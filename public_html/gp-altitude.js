@@ -55,11 +55,34 @@ const alt_geo = new Alt_geo();
 //   alt_obj.draw() will do the job
 const alt_obj = {
 	// print baro pressure
-	draw_baro : function(BARO)
+	draw_baro : function(QNH, IALT)
 	{
-		if ( BARO == null) return;
-		BARO = Math.round(BARO);
-
+		if ( QNH == null) return;
+		var BARO = Math.round(QNH);
+		if ( IALT != null ) {
+			BARO = pad(alt_geo.nPad, BARO.toString(), true) + " HPA";
+			// can only switch if altitude is available
+			/*
+				Calc hPa from ft 	R² = 0.9995 (1013 .. 827 hPa)
+				p = -0.0338 * h + 1010.9
+				Calc ft from hPa
+				h[ft] = (p - 1010.9) / -0.0338 
+			*/
+			// assume QNH is reasonable..
+			// Calc FL_TA = TA - h(QNH)
+			var trAlt =  20000; // [ft] get from config file or use the default set here
+			if (typeof DefaultTransitionAltitude !== 'undefined') {
+				trAlt = DefaultTransitionAltitude; // config value
+			}
+			var FL_TA = trAlt - ((QNH - 1010.9) / -0.0338 ); // fix for current barometer delta
+			if ( IALT >= FL_TA ) {
+				// switch to Standard Pressure above FL_TA
+				BARO = "STD BARO";
+			}
+		}else {
+			// if Alt is not avail we cannot switch at level - so indicate QNH usage
+			BARO = "QNH " + pad(alt_geo.nPad, BARO.toString(), true);
+		}
 		var ctx = gp_geo.Canvas.getContext("2d");
 		// set the origin to pos of Barometer field and assume a relative drawing 
         ctx.save();
@@ -79,7 +102,7 @@ const alt_obj = {
 			ctx.fillStyle = gpGUI.colNav;
 			ctx.textAlign = "center";
 			ctx.textBaseline="middle";
-			ctx.fillText( pad(alt_geo.nPad, BARO.toString(), true) + " HPA", alt_geo.BaroXC, alt_geo.BaroYC); // middle align
+			ctx.fillText( BARO, alt_geo.BaroXC, alt_geo.BaroYC); // middle align
 		// leave with the origin reset to the canvas origin
         ctx.restore();
 	},
@@ -117,7 +140,7 @@ const alt_obj = {
 	// print Set altitude in meters
 	draw_setAltm : function(SETALTM)
 	{
-		if ( SETALTM == null) return;
+		if ( SETALTM == null) return; // dont'r draw if not available
 		SETALTM = Math.round(SETALTM);
 
 		var ctx = gp_geo.Canvas.getContext("2d");
@@ -177,11 +200,14 @@ const alt_obj = {
 	draw : function(IALT, BARO, SETALT, SETALTM) 
 	{
 		var ctx = gp_geo.Canvas.getContext("2d");
-		IALT = Math.round(IALT);
-		
-		var value = IALT; // set to uniform the routines
-//		value = CenterValue; // DEVELOP we take it from global until having a real number
 
+		// sanity check
+		var value = 0; // used as Input later
+		// sanity check
+		if ( IALT != null ) {
+			IALT = Math.round(IALT);
+			value = IALT; // set from IALT if available
+		}
         ctx.save();
 			// set the origin to pos of AS indicator and assume a relative drawing 
 			ctx.translate(alt_geo.X, alt_geo.Y); 
@@ -231,10 +257,15 @@ const alt_obj = {
 			ctx.fill();
 			// finally the indicated number
 			ctx.fillStyle = gpGUI.colWhite;
-			ctx.fillText( pad(alt_geo.nPad, value.toString(), true), alt_geo.XC, alt_geo.YC); // middle align
+			if ( IALT != null ) {
+				ctx.fillText( pad(alt_geo.nPad, value.toString(), true), alt_geo.XC, alt_geo.YC); // middle align
+			}
+			else {
+				ctx.fillText( "- - - ", alt_geo.XC, alt_geo.YC); // middle align
+			}
         ctx.restore();
 		
-		this.draw_baro(BARO);
+		this.draw_baro(BARO, IALT);
 		this.draw_setAlt(SETALT);
 		this.draw_setAltm(SETALTM);
 		

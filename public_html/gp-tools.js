@@ -70,8 +70,8 @@ function Gp_dummy() {
 	this.dummyPlane.registration = "EC-IDT";
 	this.dummyPlane.squawk = 7000;
 	this.dummyPlane.selected = true;		
-	this.dummyPlane.altitude = 10000;
-	this.dummyPlane.alt_baro = 10010;
+	this.dummyPlane.altitude = 19000;
+	this.dummyPlane.alt_baro = 19900;
 	this.dummyPlane.alt_geom = 9990;
 	this.dummyPlane.speed = 123;
 	this.dummyPlane.gs = 125;
@@ -103,8 +103,8 @@ Gp_dummy.prototype.selected = function()
 	
 Gp_dummy.prototype.update = function() 
 {
-	this.dummyPlane.altitude++;
-	this.dummyPlane.alt_baro++;
+	this.dummyPlane.alt_baro+=10;
+	this.dummyPlane.altitude=this.dummyPlane.alt_baro; // use baro
 	this.dummyPlane.alt_geom++;
 	this.dummyPlane.speed++;
 	this.dummyPlane.gs++;

@@ -124,7 +124,7 @@ const comp_obj = {
 	// draw the compass rose
 	draw_compass : function (THEAD)
 	{
-		if ( THEAD == null) return;
+		if ( THEAD == null) return; // dont draw compass if not available
 
 		var ctx = gp_geo.Canvas.getContext("2d");
 
@@ -217,9 +217,10 @@ const comp_obj = {
 	// print Heading and Track
 	draw_heading : function(THEAD)
 	{
-		if ( THEAD == null) return;
-		THEAD = Math.round(THEAD);
-		
+		if ( THEAD != null) {
+			THEAD = Math.round(THEAD);
+		}
+	
 		var ctx = gp_geo.Canvas.getContext("2d");
 		// set the origin to pos of HEAD field and assume a relative drawing 
         ctx.save();
@@ -237,7 +238,12 @@ const comp_obj = {
 			ctx.fillStyle = gpGUI.colWhite;
 			ctx.textAlign = "center";
 			ctx.textBaseline="middle";
-			ctx.fillText( THEAD.toString() + "°", comp_geo.HeadXC, comp_geo.HeadYC); // middle align
+			if ( THEAD != null ) {
+				ctx.fillText( THEAD.toString() + "°", comp_geo.HeadXC, comp_geo.HeadYC); // middle align
+			} 
+			else {
+				ctx.fillText( "- - -", comp_geo.HeadXC, comp_geo.HeadYC); // middle align
+			}
 		// leave with the origin reset to the canvas origin
         ctx.restore();
 	},
@@ -273,6 +279,7 @@ const comp_obj = {
 	draw_headingNavBug : function(NAVHEAD, HEADING)
 	{
 		if ( NAVHEAD == null) return;
+		if ( HEADING == null) return; // don't show navBug if heading is not avail
 		
 		var ctx = gp_geo.Canvas.getContext("2d");
         ctx.save();

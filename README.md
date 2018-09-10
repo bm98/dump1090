@@ -57,3 +57,14 @@ no Raspian build tested so far - may or may not work..
 You can probably just run "make" after installing the required dependencies.
 Binaries are built in the source directory; you will need to arrange to
 install them (and a method for starting them) yourself.
+
+# Change notes within 3.6.2.1
+
+20180910
+added some more null value checks - indicates mostly '- - -' when the value is null
+added swithing to STD BARO (1013.25) when crossing TA (default 20000ft - QHN correction)
+Config file should allow to change the TA level by defining the variable:
+  DefaultTransitionAltitude = 10000   // [ft]  enter whatever you think is appropriate
+added nav_qnh to infowindow
+
+EOD

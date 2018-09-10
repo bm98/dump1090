@@ -49,7 +49,8 @@ const as_obj = {
 	// draw Mach label
 	draw_mach : function(MACH)
 	{
-		if ( MACH == null) return;
+		// sanity check
+		if ( MACH == null) return; // don't even draw the field
 
 		var ctx = gp_geo.Canvas.getContext("2d");
 		// set the origin to pos of TAS field and assume a relative drawing 
@@ -76,8 +77,10 @@ const as_obj = {
 	// draw TAS label
 	draw_tas : function(TAS)
 	{
-		if ( TAS == null) return;
-		TAS = Math.round(TAS);
+		// sanity check
+		if ( TAS != null) {
+			TAS = Math.round(TAS);
+		}
 
 		var ctx = gp_geo.Canvas.getContext("2d");
 		// set the origin to pos of TAS field and assume a relative drawing 
@@ -98,7 +101,12 @@ const as_obj = {
 			ctx.fillStyle = gpGUI.colWhite;
 			ctx.textAlign = "center";
 			ctx.textBaseline="middle";
-			ctx.fillText( "TAS " + pad(as_geo.nPad, TAS.toString(), true) + "KT", as_geo.TasXC, as_geo.TasYC); // middle align
+			if ( TAS != null ) {				
+				ctx.fillText( "TAS " + pad(as_geo.nPad, TAS.toString(), true) + "KT", as_geo.TasXC, as_geo.TasYC); // middle align
+			}
+			else {
+				ctx.fillText( "- - - ", as_geo.TasXC, as_geo.TasYC); // middle align
+			}
         ctx.restore();
 	},
 	// local only - draw the scale of the airspeed indicator
@@ -134,11 +142,12 @@ const as_obj = {
 	draw : function(IAS, TAS, MACH) 
 	{
 		var ctx = gp_geo.Canvas.getContext("2d");
-		IAS = Math.round(IAS);
-
-		var value = IAS; // set to uniform the routines
-//		value = CenterValue; // DEVELOP we take it from global until having a real number
-
+		var value = 0; // used as Input later
+		// sanity check
+		if ( IAS != null ) {
+			IAS = Math.round(IAS);
+			value = IAS; // set from IAS if available
+		}
         ctx.save();
 			// set the origin to pos of AS indicator and assume a relative drawing 
 			ctx.translate(as_geo.X, as_geo.Y); 
@@ -190,7 +199,13 @@ const as_obj = {
 			ctx.fill();
 			// finally the indicated number
 			ctx.fillStyle = gpGUI.colWhite;
-			ctx.fillText( pad(as_geo.nPad, value.toString(), true), as_geo.XC, as_geo.YC); // middle align
+			if ( IAS != null ) {
+				ctx.fillText( pad(as_geo.nPad, value.toString(), true), as_geo.XC, as_geo.YC); // middle align
+			}
+			else { 
+				// IAS not available
+				ctx.fillText( "- - - ", as_geo.XC, as_geo.YC); // middle align
+			}
 	
 			// leave with the origin reset to the canvas origin
         ctx.restore();
