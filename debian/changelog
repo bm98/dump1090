@@ -6,6 +6,13 @@ dump1090-fa (3.6.2.1) UNRELEASED; urgency=low
   * Added: daemon init for dump1090-fa
 
  -- Martin Burri <github@mail.burri-web.org>  Sat, 26 Aug 2018 18:32:30 +0100
+dump1090-fa (3.6.3) stable; urgency=medium
+
+  * Fix port 30003 output (Basestation) timestamp formatting broken in 3.6.0
+  * Ignore altitudes in DF17 "airborne" positions with airGround = ground
+  * SkyView layout change and proper support for extended data fields
+
+ -- Oliver Jowett <oliver@mutability.co.uk>  Tue, 11 Sep 2018 14:52:20 +0100
 
 dump1090-fa (3.6.2) stable; urgency=medium
 
