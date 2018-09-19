@@ -1,3 +1,13 @@
+dump1090-fa (3.6.3.1) UNRELEASED; urgency=low
+
+  * merge pull from upstream
+  * reverted the sheet display to the original FA version
+  * Updated: aircraft database from a most recent source 
+    (see README in db folder)
+  * NOTE: only the html section is ready to use right now
+
+ -- Martin Burri <github@mail.burri-web.org>  Thu, 20 Sep 2018 00:42:30 +0100
+
 dump1090-fa (3.6.2.1) UNRELEASED; urgency=low
 
   * initial fork from original source
@@ -6,6 +16,7 @@ dump1090-fa (3.6.2.1) UNRELEASED; urgency=low
   * Added: daemon init for dump1090-fa
 
  -- Martin Burri <github@mail.burri-web.org>  Sat, 26 Aug 2018 18:32:30 +0100
+
 dump1090-fa (3.6.3) stable; urgency=medium
 
   * Fix port 30003 output (Basestation) timestamp formatting broken in 3.6.0

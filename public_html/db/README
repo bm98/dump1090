@@ -3,3 +3,7 @@ originally derived from Virtual Radar Server's BasicAircraftLookup.sqb
 (see tools/vrs-basicaircraft-to-json.py). As that database is no longer being
 updated, the data is directly included here rather than periodically refreshing
 from the online copy.
+
+
+UPDATED bm98adbs 12-Sep-2018 BaseStation.sqb zip 
+from https://data.flightairmap.com/

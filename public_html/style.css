@@ -4,25 +4,12 @@ html, body {
     font-size: 10pt; overflow: hidden; height: 100%;
 }
 
-header {
-    width: 100%;
-    height: 60px;
-    background: #002F5D;
-    background: -webkit-linear-gradient(#002F5D, #002F5D 60%, #021624);
-    background: -moz-linear-gradient(#002F5D, #002F5D 60%, #021624);
-    background: -ms-linear-gradient(#002F5D, #002F5D 60%, #021624);
-    background: linear-gradient(#002F5D, #002F5D 60%, #021624);
-    display: flex;
-    box-shadow: -6px 0px 8px #999999;
-    z-index: 99999;
-}
-
 #layout_container { 
     display: flex;
     height: calc(100% - 60px);;
 }
 
-/*
+/* EXCL BM 
 #selected_infoblock {
 	position: absolute;
 	bottom: 0;
@@ -31,22 +18,24 @@ header {
 	width: 100%;
 	height: 400px;
 }
+  END EXCL BM */
+
 .infoblock-container {
 	overflow: scroll;
 	height: 100%;
 }
 #sidebar_canvas { 
+/*    flex: 1 1 auto; */
     padding: 10px;
-	overflow: scroll;
+    overflow: scroll;
 }
 #sidebar_container {
-	display: flex;
+    display: flex;
 	flex-direction: column;
     width: 500px;
-	left: 0 !important;
+    left: 0 !important;
 	height: 100%;
 }
-*/
 
 #map_container {
     flex: 1 1 auto;
@@ -54,42 +43,7 @@ header {
     height: 100%;
 }
 
-#settings_infoblock {
-    position: absolute;
-    right: 1px;
-    top: 60px;
-    width: 398px;
-    min-height: 180px;
-    background: #ffffff;
-    box-shadow: 4px 4px 10px #444444;
-    padding: 20px;
-    z-index: 9999;
-    display: none;
-}
-
-#highlighted_infoblock {
-    position: absolute;
-    left: 40px;
-    top: 60px;
-    min-width: 168px;
-    padding-right: 5px;
-    background: #ffffff;
-    box-shadow: 4px 4px 10px #444444;
-    cursor: pointer;
-    z-index: 9999;
-    display: none;
-}
-
-#sidebar_container {
-    display: flex;
-    width: 500px;
-    left: 0 !important;
-}
-
-#dump1090_infoblock {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
+/* BM addition */
 #selected_gpanel {
     flex: 1 1 auto;
     position: relative;
@@ -102,6 +56,45 @@ header {
     width: 100%;
     height: 100%;
 }
+
+.infoHeading
+{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    color: #666666;
+    color: rgb(102, 102, 102);
+}
+
+.infoData
+{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000000;
+    color: rgb(0, 0, 0);
+}
+
+.lightBlueBackground {
+    background-color: #f0f8ff;
+}
+
+.fourColumnSection1 {
+    width: 20%;
+}
+
+.fourColumnSection2 {
+    width: 20%;
+}
+
+.fourColumnSection3 {
+    width: 20%;
+}
+
+.fourColumnSection4 {
+    width: 20%;
+}
+/* END BM addition */
 
 #map_canvas {
     position: absolute;
@@ -161,6 +154,7 @@ header {
     background-image: url("images/table-icon.png");
     background-size: cover;
 }
+
 
 #splitter {
     cursor: ew-resize;
@@ -294,12 +288,10 @@ div#loader { z-index: 99; position: absolute; left: 0; top: 0; bottom: 0; right:
 .squawk7600 { font-weight: bold; background-color: #00ffff; }
 .squawk7700 { font-weight: bold; background-color: #ffff00; }
 .selected   { background-color: #dddddd; }
-
 .plane_table_row { 
     cursor: pointer;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-
 .hidden { display: none; }
 
 .infoblock_heading    { font-size: larger; }
@@ -361,14 +353,14 @@ select.error, textarea.error, input.error {
 
 .infoHeading {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
+    font-size: 12px;
+    font-weight: bold;
     line-height: 16px;
     color: #002F5D;
 }
 
 .infoHeading sub {
-	font-weight: normal;
+    font-weight: normal;
 }
 
 .infoData {
@@ -430,24 +422,6 @@ select.error, textarea.error, input.error {
     text-decoration: underline;
 }
 
-.infoHeading
-{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    line-height: 16px;
-    color: #666666;
-    color: rgb(102, 102, 102);
-}
-
-.infoData
-{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    line-height: 16px;
-    color: #000000;
-    color: rgb(0, 0, 0);
-}
-
 #header {
     width: 100%;
     height: 60px;
@@ -482,7 +456,6 @@ select.error, textarea.error, input.error {
     width: 186px;
     height: 24px;
 }
-
 .flightfeederLogo {
     width: 229px;
     height: 24px;
@@ -542,11 +515,24 @@ select.error, textarea.error, input.error {
     cursor: pointer;
 }
 
+#highlighted_infoblock {
+    position: absolute;
+    left: 40px;
+    top: 60px;
+    min-width: 168px;
+    padding-right: 5px;
+    background: #ffffff;
+    box-shadow: 4px 4px 10px #444444;
+    cursor: pointer;
+    z-index: 9999;
+    display: none;
+}
+
 .highlightedTitle {
     height: 36px;
     border-bottom: 1px solid #00A0E2;
     padding-left: 18px;
-	padding-top: 18px;
+    padding-top: 18px;
 }
 
 .highlightedInfo {
@@ -629,24 +615,8 @@ select.error, textarea.error, input.error {
     background-color: #efefef;
 }
 
-.lightBlueBackground {
-    background-color: #f0f8ff;
-}
-
-.fourColumnSection1 {
-    width: 20%;
-}
-
-.fourColumnSection2 {
-    width: 20%;
-}
-
-.fourColumnSection3 {
-    width: 20%;
-}
-
-.fourColumnSection4 {
-    width: 20%;
+#dump1090_infoblock {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .infoBlockTitleText {
@@ -684,6 +654,19 @@ select.error, textarea.error, input.error {
     display: inline-block;
     padding-right: 20px;
     padding-left: 5px;
+}
+
+#settings_infoblock {
+    position: absolute;
+    right: 1px;
+    top: 60px;
+    width: 398px;
+    min-height: 180px;
+    background: #ffffff;
+    box-shadow: 4px 4px 10px #444444;
+    padding: 20px;
+    z-index: 9999;
+    display: none;
 }
 
 .settingsColumn {
